@@ -1,0 +1,7 @@
+[submodule "external/discord.net-labs"]
+	path = external/discord.net-labs
+	url = https://github.com/Discord-Net-Labs/Discord.Net-Labs.git
+	
+[submodule "external/Rn.Suite"]
+	path = external/Rn.Suite
+	url = https://github.com/JKamsker/Rn.Suite.git

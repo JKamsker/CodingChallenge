@@ -19,17 +19,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discord.Net.WebSocket", "ex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discord.Net.Interactions", "external\discord.net-labs\src\Discord.Net.Interactions\Discord.Net.Interactions.csproj", "{74737AAA-C15D-49A3-B8FC-7D6AA3257CB5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rnd.IO", "external\Rn.Suite\Rnd.IO\Rnd.IO.csproj", "{574483B9-8001-49CC-9FD0-5A00AC5263B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rnd.IO", "external\Rn.Suite\src\lib\Rnd.IO\Rnd.IO.csproj", "{574483B9-8001-49CC-9FD0-5A00AC5263B8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discord", "Discord", "{61DAC638-2FAC-433F-A388-ED89A128E873}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rnd", "Rnd", "{DFAA156B-4B48-48A0-A92D-498570636710}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rnd.Lib", "external\Rn.Suite\Rnd.Lib\Rnd.Lib.csproj", "{64E65B19-14E2-43E7-BBB8-89A981AD0EC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rnd.Lib", "external\Rn.Suite\src\lib\Rnd.Lib\Rnd.Lib.csproj", "{64E65B19-14E2-43E7-BBB8-89A981AD0EC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rnd.Logging", "external\Rn.Suite\Rnd.Logging\Rnd.Logging.csproj", "{C2D105FA-6B02-4EDA-9AE2-EED94D87E9FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rnd.Logging", "external\Rn.Suite\src\lib\Rnd.Logging\Rnd.Logging.csproj", "{C2D105FA-6B02-4EDA-9AE2-EED94D87E9FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rnd.MongoDb", "external\Rn.Suite\Rnd.MongoDb\Rnd.MongoDb.csproj", "{2E6DCE33-AF2B-487B-AC7A-E274034977A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rnd.MongoDb", "external\Rn.Suite\src\lib\Rnd.MongoDb\Rnd.MongoDb.csproj", "{2E6DCE33-AF2B-487B-AC7A-E274034977A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{8875390E-3C33-4A91-87B8-17106CB898D6}"
 EndProject

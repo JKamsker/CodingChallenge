@@ -28,10 +28,10 @@
     <ProjectReference Include="..\external\discord.net-labs\src\Discord.Net.Interactions\Discord.Net.Interactions.csproj" />
     <ProjectReference Include="..\external\discord.net-labs\src\Discord.Net.Rest\Discord.Net.Rest.csproj" />
     <ProjectReference Include="..\external\discord.net-labs\src\Discord.Net.WebSocket\Discord.Net.WebSocket.csproj" />
-    <ProjectReference Include="..\external\Rn.Suite\Rnd.IO\Rnd.IO.csproj" />
-    <ProjectReference Include="..\external\Rn.Suite\Rnd.Lib\Rnd.Lib.csproj" />
-    <ProjectReference Include="..\external\Rn.Suite\Rnd.Logging\Rnd.Logging.csproj" />
-    <ProjectReference Include="..\external\Rn.Suite\Rnd.MongoDb\Rnd.MongoDb.csproj" />
+    <ProjectReference Include="..\external\Rn.Suite\src\lib\Rnd.IO\Rnd.IO.csproj" />
+    <ProjectReference Include="..\external\Rn.Suite\src\lib\Rnd.Lib\Rnd.Lib.csproj" />
+    <ProjectReference Include="..\external\Rn.Suite\src\lib\Rnd.Logging\Rnd.Logging.csproj" />
+    <ProjectReference Include="..\external\Rn.Suite\src\lib\Rnd.MongoDb\Rnd.MongoDb.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

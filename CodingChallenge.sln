@@ -33,9 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rnd.MongoDb", "external\Rn.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{8875390E-3C33-4A91-87B8-17106CB898D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingChallenge.ChallengeServer.Abstractions", "CodingChallenge.ChallengeServer.Abstractions\CodingChallenge.ChallengeServer.Abstractions.csproj", "{B36B6635-6531-4D38-92BB-ACB59BC9B24B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingChallenge.ChallengeServer.Abstractions", "CodingChallenge.ChallengeServer.Abstractions\CodingChallenge.ChallengeServer.Abstractions.csproj", "{B36B6635-6531-4D38-92BB-ACB59BC9B24B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingChallenge.ChallengeServer.NumberMatrix", "CodingChallenge.ChallengeServer.NumberMatrix\CodingChallenge.ChallengeServer.NumberMatrix.csproj", "{F5C22763-2BE5-472D-9F8C-63C3BF0D6847}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingChallenge.ChallengeServer.NumberMatrix", "CodingChallenge.ChallengeServer.NumberMatrix\CodingChallenge.ChallengeServer.NumberMatrix.csproj", "{F5C22763-2BE5-472D-9F8C-63C3BF0D6847}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingChallenge.ChallengeServer.Plugins.Demo", "CodingChallenge.ChallengeServer.Plugins.Demo\CodingChallenge.ChallengeServer.Plugins.Demo.csproj", "{8E02391B-4873-40CD-81C2-E3D379183A8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{F5C22763-2BE5-472D-9F8C-63C3BF0D6847}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5C22763-2BE5-472D-9F8C-63C3BF0D6847}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5C22763-2BE5-472D-9F8C-63C3BF0D6847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E02391B-4873-40CD-81C2-E3D379183A8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E02391B-4873-40CD-81C2-E3D379183A8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E02391B-4873-40CD-81C2-E3D379183A8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E02391B-4873-40CD-81C2-E3D379183A8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{2E6DCE33-AF2B-487B-AC7A-E274034977A4} = {DFAA156B-4B48-48A0-A92D-498570636710}
 		{B36B6635-6531-4D38-92BB-ACB59BC9B24B} = {8875390E-3C33-4A91-87B8-17106CB898D6}
 		{F5C22763-2BE5-472D-9F8C-63C3BF0D6847} = {8875390E-3C33-4A91-87B8-17106CB898D6}
+		{8E02391B-4873-40CD-81C2-E3D379183A8A} = {8875390E-3C33-4A91-87B8-17106CB898D6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4EE9B13-F607-4554-BAA5-61041C9AFAD6}

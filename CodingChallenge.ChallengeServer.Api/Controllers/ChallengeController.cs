@@ -1,7 +1,9 @@
 using CodingChallenge.ChallengeServer.Abstractions;
+using CodingChallenge.ChallengeServer.Api.Models;
 using CodingChallenge.ChallengeServer.Api.Services;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 using ChallengeResult = CodingChallenge.ChallengeServer.Abstractions.ChallengeResult;
 
@@ -13,21 +15,24 @@ public class ChallengeController : ControllerBase
 {
     private readonly IEnumerable<IChallengeService> _challengeServices;
     private readonly ILogger<ChallengeController> _logger;
+    private readonly ChallengeServerConfiguration _options;
 
     public ChallengeController
     (
         IEnumerable<IChallengeService> challengeServices,
-        ILogger<ChallengeController> logger
+        ILogger<ChallengeController> logger,
+        IOptions<ChallengeServerConfiguration> options
     )
     {
         _challengeServices = challengeServices;
         _logger = logger;
+        _options = options.Value;
     }
 
     [HttpGet("Discovery")]
     public object Get() => new
     {
-        RepositoryName = "SampleCHallenge",
+        RepositoryName = _options.RepositoryName ?? "DemoRepo",
         Challenges = _challengeServices.Select(x => new
         {
             x.Identifier,

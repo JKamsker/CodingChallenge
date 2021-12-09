@@ -1,0 +1,21 @@
+# syntax=docker/dockerfile:1
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+WORKDIR /app
+
+ADD . .
+
+WORKDIR /app/CodingChallenge.ChallengeServer.Api
+RUN dotnet restore
+
+# Copy everything else and build
+RUN dotnet publish -c Release -o ../out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+COPY --from=build-env /app/out .
+
+ENV ChallengeServer__PluginDir=/plugins
+ENV ChallengeServer__RepositoryName=Demo123
+
+ENTRYPOINT ["dotnet", "CodingChallenge.ChallengeServer.Api.dll"]

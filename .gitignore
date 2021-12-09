@@ -370,3 +370,4 @@ FodyWeavers.xsd
 .local/
 # /external/discord.net-labs
 # /external/Rn.Suite
+/CodingChallenge.ChallengeServer.Api/Plugins/

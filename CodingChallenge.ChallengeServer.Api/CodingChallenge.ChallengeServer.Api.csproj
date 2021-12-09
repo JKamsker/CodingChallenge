@@ -7,13 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Plugins\**" />
+    <Content Remove="Plugins\**" />
+    <EmbeddedResource Remove="Plugins\**" />
+    <None Remove="Plugins\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dnlib" Version="3.3.5" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CodingChallenge.ChallengeServer.Abstractions\CodingChallenge.ChallengeServer.Abstractions.csproj" />
-    <ProjectReference Include="..\CodingChallenge.ChallengeServer.NumberMatrix\CodingChallenge.ChallengeServer.NumberMatrix.csproj" />
+    <ProjectReference Include="..\external\Rn.Suite\src\lib\Rnd.IO\Rnd.IO.csproj" />
+    <ProjectReference Include="..\external\Rn.Suite\src\lib\Rnd.Lib\Rnd.Lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>

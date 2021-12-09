@@ -4,6 +4,10 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/JKamsker/CodingChallenge</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JKamsker/CodingChallenge</RepositoryUrl>
+    <Version>0.0.1</Version>
   </PropertyGroup>
 
 </Project>

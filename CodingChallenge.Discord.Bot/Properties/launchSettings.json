@@ -3,7 +3,9 @@
     "CodingChallenge.Discord.Bot": {
       "commandName": "Project",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Development"
+        "DOTNET_ENVIRONMENT": "Development",
+        "_OVERWRITE_REPOSITORY": "https://codingchallenge.azurewebsites.net",
+        "DEFAULT_REPOSITORY": "https://codingchallenge.azurewebsites.net"
       }
     }
   }

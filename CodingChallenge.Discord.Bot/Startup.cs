@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Security.Authentication;
 using CodingChallenge.Discord.Bot.Extensions;
 using CodingChallenge.Discord.Bot;
+using Rnd.Lib.Utils;
 
 namespace CodingChallenge.Discord.Bot;
 
@@ -78,7 +79,6 @@ public class Startup
         IMongoCollection<DiscordUserData> users = db.GetCollection<DiscordUserData>("Users");
         IMongoCollection<ChallengeRepositoryData> repositoryData = db.GetCollection<ChallengeRepositoryData>("ChallengeRepositories");
 
-
         repositoryData.Indexes.CreateOne
         (
             new CreateIndexModel<ChallengeRepositoryData>
@@ -93,18 +93,35 @@ public class Startup
             .AddSingleton(repositoryData)
             ;
 
-        repositoryData.DeleteMany(x => true);
-        if (repositoryData.EstimatedDocumentCount() == 0)
+        var overwriteRepository = Configuration["OVERWRITE_REPOSITORY"]?.ToString();
+        var defaultRepository = Configuration["DEFAULT_REPOSITORY"]?.ToString();
+
+        (bool Parsed, bool Overwrite, string Value) action =
+            UriEx.IsValidUrl(overwriteRepository)
+            ? (true, true, overwriteRepository)
+            : UriEx.IsValidUrl(defaultRepository)
+                ? (true, false, defaultRepository)
+                : (false, false, String.Empty);
+
+        if (action.Parsed)
         {
-            repositoryData.InsertMany(new List<ChallengeRepositoryData>
+            if (action.Overwrite)
             {
-                new ChallengeRepositoryData()
+                repositoryData.DeleteMany(x => true);
+            }
+
+            if (repositoryData.EstimatedDocumentCount() == 0)
+            {
+                repositoryData.InsertMany(new List<ChallengeRepositoryData>
                 {
-                    RepositoryName = "SampleChallenge",
-                    RepositoryDescriptor = new HttpChallengeRepositoryDescriptor { BaseUrl = "https://codingchallenge.azurewebsites.net" },
-                    CreatedAt =  DateTimeOffset.UtcNow.ToUnixTimeSeconds()
-                },
-            });
+                    new ChallengeRepositoryData()
+                    {
+                        RepositoryName = "SampleChallenge",
+                        RepositoryDescriptor = new HttpChallengeRepositoryDescriptor { BaseUrl = action.Value },
+                        CreatedAt =  DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+                    },
+                });
+            }
         }
     }
 
@@ -112,7 +129,6 @@ public class Startup
     {
         var connectionString = Configuration["Database:ConnectionString"]?.ToString();
         Console.WriteLine($"connectionString: {connectionString}");
-
 
         var settings = MongoClientSettings.FromUrl(
             new MongoUrl(connectionString)

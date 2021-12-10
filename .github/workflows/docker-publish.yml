@@ -63,6 +63,9 @@ jobs:
           echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
+          echo "IMAGE_ID=$IMAGE_ID"
+          echo "VERSION=$VERSION"
+
       # - name: Echoing the publishing Variables
       #   run: |
       #     # ${{env.IMAGE_ID}} == $IMAGE_ID

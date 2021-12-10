@@ -31,40 +31,37 @@ jobs:
         run: |
           chmod +x ./buildScripts/repository/init.sh
           ./buildScripts/repository/init.sh
+      # - 
+      #   name: Build Base Api
+      #   run: docker build -t dcapi . -f ./buildScripts/Api/Dockerfile-Base
+      # - 
+      #   name: Build Demo Api Server
+      #   run: docker build -t dcapi-demo-plugin . -f ./buildScripts/Api/Dockerfile-DemoPlugin
+      # - 
+      #   name: Build Bot
+      #   run: docker build -t dcbot . -f ./buildScripts/Bot/Dockerfile
       - 
-        name: Build Base Api
-        run: docker build -t dcapi . -f ./buildScripts/Api/Dockerfile-Base
+        name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - 
-        name: Build Demo Api Server
-        run: docker build -t dcapi-demo-plugin . -f ./buildScripts/Api/Dockerfile-DemoPlugin
-      - 
-        name: Build Bot
-        run: docker build -t dcbot . -f ./buildScripts/Bot/Dockerfile
-      
+        name: Calculate Publishing Variables
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
 
-        # run: docker build . --file Dockerfile --tag $IMAGE_NAME
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-      # - name: Log into registry
-      #   run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
-      # - name: Calculate Publishing Variables
-      #   run: |
-      #     IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
-      #     # Change all uppercase to lowercase
-      #     IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
 
-      #     # Strip git ref prefix from version
-      #     VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-      #     # Strip "v" prefix from tag name
-      #     [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-      #     # Use Docker `latest` tag convention
-      #     [ "$VERSION" == "master" ] && VERSION=latest
-
-      #     echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
-      #     echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       # - name: Echoing the publishing Variables
       #   run: |

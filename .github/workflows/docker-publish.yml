@@ -14,9 +14,7 @@ on:
   # pull_request:
 
 env:
-  IMAGE_NAME: discordbot-dotnet
-  COSMOSDB_ENDPOINT: https://coderdojo-discordbot-new.documents.azure.com:443/
-  COSMOSDB_NAME: MAINBBOT
+  IMAGE_NAME: ChallengeBot
 
 # $PWD seems to be the rootDirectory of the repo
 jobs:
@@ -66,6 +64,21 @@ jobs:
           echo "IMAGE_ID=$IMAGE_ID"
           echo "VERSION=$VERSION"
 
+      - 
+        name: Get Git Version
+        uses: docker://gittools/gitversion:5.0.2-linux-centos-7-netcoreapp2.2
+        with:
+          args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_MajorMinorPatch > /github/workspace/version.txt\""
+      - 
+        name: Echo Git Version
+        run: cat /github/workspace/version.txt
+      - 
+        name: Output Run ID
+        run: echo ${{ github.run_id }}
+      - 
+        name: Output Run Number
+        run: echo ${{ github.run_number }}
+        
       # - name: Echoing the publishing Variables
       #   run: |
       #     # ${{env.IMAGE_ID}} == $IMAGE_ID

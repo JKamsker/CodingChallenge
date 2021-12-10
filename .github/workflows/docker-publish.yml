@@ -66,7 +66,7 @@ jobs:
 
       - 
         name: Get Git Version
-        uses: docker://gittools/gitversion:5.0.2-linux-centos-7-netcoreapp2.2
+        uses: gittools/actions/gitversion/execute@v0.9.7
         with:
           args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_MajorMinorPatch > /github/workspace/version.txt\""
       - 
@@ -78,7 +78,7 @@ jobs:
       - 
         name: Output Run Number
         run: echo ${{ github.run_number }}
-        
+
       # - name: Echoing the publishing Variables
       #   run: |
       #     # ${{env.IMAGE_ID}} == $IMAGE_ID

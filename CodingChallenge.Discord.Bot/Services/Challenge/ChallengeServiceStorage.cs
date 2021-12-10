@@ -40,11 +40,11 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge
             {
                 var repository = await _repositoryFactory.CreateRepositoryAsync(repositoryData.RepositoryDescriptor);
                 var discovery = await repository.GetDiscoveryAsync();
-
                 if (discovery == null)
                 {
                     continue;
                 }
+
                 if (!string.IsNullOrEmpty(discovery.RepositoryName)
                     && !string.Equals(repositoryData.RepositoryName, discovery.RepositoryName))
                 {

@@ -28,7 +28,8 @@ jobs:
       - name: Init Project
         run: |
           echo "CurrentDir: $PWD"
-          chmod + x ./buildScripts/repository/init.sh
+          ls -la
+          chmod +x ./buildScripts/repository/init.sh
           ./buildScripts/repository/init.sh
 
       # - name: Build image

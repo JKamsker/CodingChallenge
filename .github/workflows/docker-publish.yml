@@ -70,6 +70,7 @@ jobs:
         name: Output Run Number
         run: echo ${{ github.run_number }}
 
+
       # - name: Echoing the publishing Variables
       #   run: |
       #     # ${{env.IMAGE_ID}} == $IMAGE_ID

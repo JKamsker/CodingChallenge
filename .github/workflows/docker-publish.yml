@@ -25,6 +25,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - 
+        name: Calculate Publishing Variables
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          VERSION = ${{github.run_number}}
+
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+          echo "IMAGE_ID=$IMAGE_ID"
+          echo "VERSION=$VERSION"
+      - 
         name: Init Project
         run: |
           chmod +x ./buildScripts/repository/init.sh
@@ -41,21 +56,7 @@ jobs:
       - 
         name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-      - 
-        name: Calculate Publishing Variables
-        run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/
 
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          Version = ${{github.run_number}}
-
-          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-
-          echo "IMAGE_ID=$IMAGE_ID"
-          echo "VERSION=$VERSION"
       - 
         name: Output Run Number
         run: echo ${{github.run_number}}

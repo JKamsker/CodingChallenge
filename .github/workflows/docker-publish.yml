@@ -64,19 +64,6 @@ jobs:
           echo "IMAGE_ID=$IMAGE_ID"
           echo "VERSION=$VERSION"
       - 
-        name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.7
-        with:
-          versionSpec: '5.5.0'
-      - 
-        name: Get Git Version
-        uses: gittools/actions/gitversion/execute@v0.9.7
-        with:
-          args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_MajorMinorPatch > /github/workspace/version.txt\""
-      - 
-        name: Echo Git Version
-        run: cat /github/workspace/version.txt
-      - 
         name: Output Run ID
         run: echo ${{ github.run_id }}
       - 

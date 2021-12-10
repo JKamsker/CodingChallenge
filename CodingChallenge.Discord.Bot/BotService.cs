@@ -37,13 +37,18 @@ internal class BotService : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
+        _logger.LogInformation($"Logging into discord");
+
         await _client.LoginAsync(TokenType.Bot, _settings.Token);
         await _client.StartAsync();
 
         while (_client.ConnectionState != ConnectionState.Connected)
         {
+            _logger.LogInformation($"Waiting for login State: {_client.ConnectionState}");
             await Task.Delay(300);
         }
+
+        _logger.LogInformation("Initializing services");
 
         //await SlashCommandAsync();
         await _commandHandlingService.InitializeAsync();

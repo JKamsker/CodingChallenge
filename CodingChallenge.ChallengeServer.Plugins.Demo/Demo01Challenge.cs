@@ -6,7 +6,7 @@ namespace CodingChallenge.ChallengeServer.Plugins.Demo
     {
         public string Identifier => "Demo_01";
         public string Name => "Demo 01";
-        public string Description => "A very hard and dead serious challenge, I am not sure if anyone is going to make it";
+        public string Description => "AYYY A very hard and dead serious challenge, I am not sure if anyone is going to make it";
 
         public IEnumerable<string> PreRequisits => Enumerable.Empty<string>();
 

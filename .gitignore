@@ -371,3 +371,5 @@ FodyWeavers.xsd
 # /external/discord.net-labs
 # /external/Rn.Suite
 /CodingChallenge.ChallengeServer.Api/Plugins/
+.env
+buildScripts/AllInOne/db/

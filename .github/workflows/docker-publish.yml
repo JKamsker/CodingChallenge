@@ -32,7 +32,7 @@ jobs:
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-          VERSION = ${{github.run_number}}
+          VERSION=${{github.run_number}}
 
           echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV

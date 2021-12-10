@@ -29,34 +29,27 @@ jobs:
         run: |
           chmod +x ./buildScripts/repository/init.sh
           ./buildScripts/repository/init.sh
-      # - 
-      #   name: Build Base Api
-      #   run: docker build -t dcapi . -f ./buildScripts/Api/Dockerfile-Base
-      # - 
-      #   name: Build Demo Api Server
-      #   run: docker build -t dcapi-demo-plugin . -f ./buildScripts/Api/Dockerfile-DemoPlugin
-      # - 
-      #   name: Build Bot
-      #   run: docker build -t dcbot . -f ./buildScripts/Bot/Dockerfile
+      - 
+        name: Build Base Api
+        run: docker build -t dcapi . -f ./buildScripts/Api/Dockerfile-Base
+      - 
+        name: Build Demo Api Server
+        run: docker build -t dcapi-demo-plugin . -f ./buildScripts/Api/Dockerfile-DemoPlugin
+      - 
+        name: Build Bot
+        run: docker build -t dcbot . -f ./buildScripts/Bot/Dockerfile
       - 
         name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - 
         name: Calculate Publishing Variables
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          Version = ${{github.run_number}}
 
           echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
@@ -64,23 +57,40 @@ jobs:
           echo "IMAGE_ID=$IMAGE_ID"
           echo "VERSION=$VERSION"
       - 
-        name: Output Run ID
-        run: echo ${{ github.run_id }}
-      - 
         name: Output Run Number
-        run: echo ${{ github.run_number }}
+        run: echo ${{github.run_number}}
+      - 
+        name: Echoing the publishing Variables
+        run: |
+          echo IMAGE_ID="${{env.IMAGE_ID}}"
+          echo VERSION="${{env.VERSION}}"
+      - 
+        name: Push api-base image
+        run: |
+          CURRENT_ID=$IMAGE_ID/api-base
+          docker tag dcapi $CURRENT_ID:$VERSION
+          docker tag dcapi $CURRENT_ID:latest
 
+          docker push $CURRENT_ID:$VERSION
+          docker push $CURRENT_ID:latest
+      - 
+        name: Push api-demo image
+        run: |
+          CURRENT_ID=$IMAGE_ID/api-demo
+          docker tag dcapi-demo-plugin $CURRENT_ID:$VERSION
+          docker tag dcapi-demo-plugin $CURRENT_ID:latest
 
-      # - name: Echoing the publishing Variables
-      #   run: |
-      #     # ${{env.IMAGE_ID}} == $IMAGE_ID
-      #     echo IMAGE_ID="${{env.IMAGE_ID}}"
-      #     echo VERSION="${{env.VERSION}}"
+          docker push $CURRENT_ID:$VERSION
+          docker push $CURRENT_ID:latest
+      - 
+        name: Push bot image
+        run: |
+          CURRENT_ID=$IMAGE_ID/discord-bot
+          docker tag dcbot $CURRENT_ID:$VERSION
+          docker tag dcbot $CURRENT_ID:latest
 
-      # - name: Push image
-      #   run: |
-      #     docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-      #     docker push $IMAGE_ID:$VERSION
+          docker push $CURRENT_ID:$VERSION
+          docker push $CURRENT_ID:latest
         
       # - name: Deploy to Hetzner via SSH action
       #   uses: appleboy/ssh-action@v0.1.3

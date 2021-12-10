@@ -4,7 +4,9 @@ services:
         environment:
             - Database__Name=DiscordChallengeBot
             - 'Database__ConnectionString=mongodb://root:example@mongodb-server:27017/?authSource=admin'
+            - "Discord__Token=${Discord_Token}"
             - 'Logging__LogLevel__Default=Debug'
+            - 'OVERWRITE_REPOSITORY=http://dcapi-demo-plugin'
         container_name: dc-bot
         image: dcbot
 
@@ -13,10 +15,10 @@ services:
             - '8081:80'
         container_name: dcapi-demo-plugin
         image: dcapi-demo-plugin
-    # mongo:
-    #   image: mongo
-    #   restart: always
-    #   container_name: mongodb-server
-    #   environment:
-    #     MONGO_INITDB_ROOT_USERNAME: root
-    #     MONGO_INITDB_ROOT_PASSWORD: example
+    mongo:
+      image: mongo
+      restart: always
+      container_name: mongodb-server
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: example

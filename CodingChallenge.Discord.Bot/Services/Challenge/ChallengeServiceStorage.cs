@@ -2,6 +2,7 @@
 
 using CodingChallenge.Discord.Bot.Dal;
 using CodingChallenge.Discord.Bot.Models.ChallengeApi;
+
 using Microsoft.Extensions.Logging;
 
 namespace CodingChallenge.Discord.Bot.Services.Challenge
@@ -39,6 +40,18 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge
             {
                 var repository = await _repositoryFactory.CreateRepositoryAsync(repositoryData.RepositoryDescriptor);
                 var discovery = await repository.GetDiscoveryAsync();
+
+                if (discovery == null)
+                {
+                    continue;
+                }
+                if (!string.IsNullOrEmpty(discovery.RepositoryName)
+                    && !string.Equals(repositoryData.RepositoryName, discovery.RepositoryName))
+                {
+                    repositoryData.RepositoryName = discovery.RepositoryName;
+                    await _persistenceService.UpsertRepositoryData(repositoryData);
+                }
+
                 foreach (var challenge in discovery.Challenges)
                 {
                     var simpleName = challenge.Identifier;

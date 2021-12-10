@@ -116,7 +116,7 @@ public class Startup
                 {
                     new ChallengeRepositoryData()
                     {
-                        RepositoryName = "SampleChallenge",
+                        RepositoryName = "DefaultChallenge",
                         RepositoryDescriptor = new HttpChallengeRepositoryDescriptor { BaseUrl = action.Value },
                         CreatedAt =  DateTimeOffset.UtcNow.ToUnixTimeSeconds()
                     },

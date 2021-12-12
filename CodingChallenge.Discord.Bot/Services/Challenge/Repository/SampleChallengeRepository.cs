@@ -4,6 +4,8 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge
 {
     public class SampleChallengeRepository : IChallengeRepository
     {
+        public IChallengeRepositoryDescriptor Descriptor { get; }
+
         public async Task<ChallengeDiscoveryDto?> GetDiscoveryAsync() => new ChallengeDiscoveryDto
         {
             RepositoryName = "In-Memory",

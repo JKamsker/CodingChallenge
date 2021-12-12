@@ -6,15 +6,16 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge
 {
     public record ChallengeServiceStorageEntity
     (
-        string Identifier,
-        string RepositoryName,
+        //string Identifier,
+        //string RepositoryName,
+        FullyQualifiedName FullyQualifiedIdentifier,
         IChallengeRepositoryDescriptor Descriptor,
         ChallengeDto ChallengeData,
         bool IsIdentifierUnique = true
     )
     {
-        public FullyQualifiedName FullyQualifiedIdentifier
-            => new(RepositoryName, Identifier);
+        //public FullyQualifiedName FullyQualifiedIdentifier
+        //    => new(RepositoryName, Identifier);
 
         public string RenderPreRequisits()
         {
@@ -26,11 +27,12 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge
         }
 
         public string GetPrimaryIdentifier()
-            => string.IsNullOrEmpty(Identifier) ? FullyQualifiedIdentifier : Identifier;
+            => string.IsNullOrEmpty(FullyQualifiedIdentifier.Identifier) ? FullyQualifiedIdentifier : FullyQualifiedIdentifier.Identifier;
+
         public string RenderIdentifier()
         {
             return IsIdentifierUnique
-                ? $"*{Identifier}* (`{FullyQualifiedIdentifier}`)"
+                ? $"*{FullyQualifiedIdentifier.Identifier}* (`{FullyQualifiedIdentifier}`)"
                 : $"*{FullyQualifiedIdentifier}*";
         }
     }

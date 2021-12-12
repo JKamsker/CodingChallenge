@@ -1,16 +1,9 @@
 ﻿using AutoMapper;
 
 using CodingChallenge.Discord.Bot.Models.ChallengeApi;
-using CodingChallenge.Discord.Bot.Models.Mongo;
 
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Rnd.Lib.Extensions;
 using CodingChallenge.Discord.Bot.Dal;
 
@@ -51,25 +44,33 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge
             foreach (var challenge in challenges)
             {
                 var meetsPrerequesits = challenge.ChallengeData.PreRequisits.OrEmpty()
-                    .All(id => user.HasSolved(challenge.RepositoryName, id));
+                    .All(id => user.HasSolved(challenge.FullyQualifiedIdentifier, id));
 
-                if (meetsPrerequesits && !user.HasSolved(challenge.RepositoryName, challenge.Identifier))
+                if (meetsPrerequesits && !user.HasSolved(challenge.FullyQualifiedIdentifier))
                 {
                     yield return challenge;
                 }
             }
         }
 
-        public async Task<ChallengeDescriptionDto?> StartChallengeAsync(string challengeIdentifier, string challengee)
+        public async Task<ChallengeDescriptionDto?> StartChallengeAsync(string challengeIdentifier, ulong challengee)
         {
-            var repo = await GetRepositoryAsync(challengeIdentifier);
+            var fqId = await _serviceStorage.GetFullyQualifiedName(challengeIdentifier);
+            var repo = await GetRepositoryAsync(fqId);
             if (repo is null)
             {
                 return null;
             }
 
-            var identifier = challengeIdentifier.Split('.').LastOrDefault();
-            return await repo.GenerateChallengeAsync(identifier, challengee);
+            var user = await _userDao.GetOrCreateUserAsync(challengee);
+            if (user.StartChallenge(fqId))
+            {
+                await _userDao.PersistUserAsync(user);
+            }
+
+            await _challengeDao.SetStartedAt(fqId, DateTimeOffset.UtcNow);
+
+            return await repo.GenerateChallengeAsync(fqId.Identifier, challengee.ToString());
         }
 
         public async Task<ChallengeSolutionResponseDto?> SolveChallengeAsync(ulong userId, ChallengeSolutionRequestDto solutionRequestDto)
@@ -80,6 +81,7 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge
             {
                 return null;
             }
+            
 
             var fqn = await _serviceStorage.GetFullyQualifiedName(solutionRequestDto.ChallengeIdentifier);
             if (fqn == FullyQualifiedName.Default)
@@ -96,24 +98,12 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge
             }
 
             var solution = await repo.SolveChallengeAsync(solutionRequestDto);
-            if (solution.Success)
+            if (solution?.Success == true && user.SolveChallenge(fqn))
             {
-                await PersistUserAsync(user, fqn);
+                await _userDao.PersistUserAsync(user);
             }
 
             return solution;
-
-            async Task PersistUserAsync(DiscordUserData discordUserData, FullyQualifiedName fullyQualifiedName)
-            {
-                discordUserData.SolvedChallenges.Add(new()
-                {
-                    RepositoryId = fullyQualifiedName.Repository,
-                    ChallengeId = fullyQualifiedName.Identifier,
-                    SolvedAt = DateTimeOffset.UtcNow
-                });
-
-                await _userDao.PersistUserAsync(discordUserData);
-            }
         }
 
         private async Task<IChallengeRepository?> GetRepositoryAsync(string challengeIdentifier)

@@ -1,4 +1,5 @@
 ﻿using CodingChallenge.Discord.Bot.Models.Mongo;
+using CodingChallenge.Discord.Bot.Services.Challenge;
 
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -45,5 +46,18 @@ public class ChallengeDao : DaoBase<ChallengeRepositoryData>
             options: new ReplaceOptions { IsUpsert = true },
             replacement: repositoryData
         );
+    }
+
+    public async Task SetStartedAt(FullyQualifiedName fqId, DateTimeOffset? timeOffset = null)
+    {
+        timeOffset ??= DateTimeOffset.UtcNow;
+
+        var repoData = await Collection.FindAsync(x => x.RepositoryName == fqId.Repository);
+        var data = await repoData.FirstAsync();
+
+        var challenge = data.FindChallenge(fqId);
+        challenge.StartedAt ??= timeOffset.Value;
+
+        await Collection.FindOneAndReplaceAsync(x => x.Id == data.Id, data);
     }
 }

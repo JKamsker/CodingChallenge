@@ -7,6 +7,8 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge;
 
 public class HttpChallengeRepository : IChallengeRepository
 {
+    public IChallengeRepositoryDescriptor Descriptor { get; }
+
     private readonly HttpChallengeRepositoryDescriptor _httpDescriptor;
     private readonly IHttpClientFactory _clientFactory;
 

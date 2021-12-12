@@ -58,8 +58,9 @@ namespace CodingChallenge.Discord.Bot.Services.Challenge
                     var fullyQualifiedName = $"{repositoryData.RepositoryName}.{challenge.Identifier}";
 
                     var descriptor = new ChallengeServiceStorageEntity(
-                        Identifier: simpleName,
-                        RepositoryName: repositoryData.RepositoryName,
+                        //Identifier: simpleName,
+                        //RepositoryName: repositoryData.RepositoryName,
+                        new(repositoryData.RepositoryName, simpleName),
                         Descriptor: repositoryData.RepositoryDescriptor,
                         ChallengeData: challenge
                     );

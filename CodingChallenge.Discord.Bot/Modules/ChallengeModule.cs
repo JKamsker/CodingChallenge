@@ -61,7 +61,7 @@ namespace CodingChallenge.Discord.Bot.Modules
         [SlashCommand("start", "Start a new challenge!")]
         public async Task StartAsync(string identifier)
         {
-            var challenge = await _challengeService.StartChallengeAsync(identifier, Context.User.Id.ToString());
+            var challenge = await _challengeService.StartChallengeAsync(identifier, Context.User.Id);
             if (challenge is null)
             {
                 await RespondAsync("`Sorry, i can't find that challenge`");

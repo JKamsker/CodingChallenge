@@ -72,7 +72,7 @@ namespace CodingChallenge.Discord.Bot.Modules
                 ? "The challenge has no Text, sorry :("
                 : challenge.Message;
 
-            await RespondAsync(challengeText);
+            await RespondAsync(challengeText, ephemeral: true);
 
             if (challenge.Attachments?.Length is not null and > 0)
             {

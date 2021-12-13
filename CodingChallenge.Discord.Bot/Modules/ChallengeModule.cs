@@ -82,7 +82,10 @@ namespace CodingChallenge.Discord.Bot.Modules
                     .Select((x, i) => new FileAttachment(x, i > 1 ? $"ChallengeAttachment-{i}.txt" : "ChallengeAttachment.txt"))
                     .ToList();
 
-                await Context.Channel.SendFilesAsync(streams);
+                // await Context.Channel.SendFilesAsync(streams);
+                
+                await Context.Interaction.FollowupWithFilesAsync(streams, "Your input", ephemeral: true);
+
             }
 
             //await Context.Channel.SendFileAsync(Stream.Null, "Info.Text");

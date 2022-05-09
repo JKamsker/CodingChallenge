@@ -146,7 +146,7 @@ public partial class CommandHandlingService
             var message = $"Command not found: {context?.Message?.Content ?? "[NOT_FOUND]" }";
             _logger.LogInformation(message);
             _logger.LogInformation(message);
-            await (context?.Message.ReplyAsync(context.Message.Content) ?? Task.CompletedTask);
+            // await (context?.Message.ReplyAsync(context.Message.Content) ?? Task.CompletedTask);
             //await _commandSuggestions.SuggestCommand(context, _discordSettings.CurrentValue.CommandPrefix[0]);
             return;
         }
